@@ -209,7 +209,9 @@ public class AdminController {
     @GetMapping(value = "/view_product")
     public String showViewProductForm(Model model, @RequestParam(defaultValue = "") String ch) {
         if(ch.isBlank()){
-            model.addAttribute("products", productService.getAllProducts());
+            List<Product> productList = (List<Product>) productService.getAllProducts();
+            model.addAttribute("products", productList);
+            model.addAttribute("totalElements", productList.size());
         }
         else{
             model.addAttribute("products", productService.searchProduct(ch));

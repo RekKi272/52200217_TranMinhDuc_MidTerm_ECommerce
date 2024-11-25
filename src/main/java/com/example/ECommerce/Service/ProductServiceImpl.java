@@ -97,9 +97,15 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<Product> getFilteredProducts(int pageNo, int pageSize, String category, String brand, String search, Integer minPrice, Integer maxPrice) {
+    public Page<Product> getFilteredProducts(int pageNo, int pageSize, String category, String brand,
+                                             String search, String color, Integer minPrice, Integer maxPrice) {
         Pageable pageable = PageRequest.of(pageNo, pageSize);
-        return productRepository.findFilteredProducts(category, brand, search, minPrice, maxPrice, pageable);
+        return productRepository.findFilteredProducts(category, brand, search, color, minPrice, maxPrice, pageable);
+    }
+
+    @Override
+    public List<String> getAllProductColors(){
+        return productRepository.findAllDistinctColors();
     }
 
 }

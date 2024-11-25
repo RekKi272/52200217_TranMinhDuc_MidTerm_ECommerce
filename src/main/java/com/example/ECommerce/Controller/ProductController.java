@@ -65,19 +65,25 @@ public class ProductController {
                            @RequestParam(value = "category", defaultValue = "") String category,
                            @RequestParam(value = "brand", defaultValue = "") String brand,
                            @RequestParam(value = "ch", defaultValue = "") String search,
-                           @RequestParam(value = "minPrice", required = false) Integer minPrice,
-                           @RequestParam(value = "maxPrice", required = false) Integer maxPrice,
+                           @RequestParam(value = "color", defaultValue = "") String color,
+                           @RequestParam(value = "minPrice", required = false) String minPriceStr,
+                           @RequestParam(value = "maxPrice", required = false) String maxPriceStr,
                            @RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo,
                            @RequestParam(name = "pageSize", defaultValue = "12") Integer pageSize) {
+
+        Integer minPrice = ("null".equals(minPriceStr) || minPriceStr == null || minPriceStr.isEmpty()) ? null : Integer.valueOf(minPriceStr);
+        Integer maxPrice = ("null".equals(maxPriceStr) || maxPriceStr == null || maxPriceStr.isEmpty()) ? null : Integer.valueOf(maxPriceStr);
+
         Page<Product> page = productService.getFilteredProducts(pageNo, pageSize,
                 category.isEmpty() ? null : category,
                 brand.isEmpty() ? null : brand,
                 search.isEmpty() ? null : search,
+                color.isEmpty() ? null : color,
                 minPrice, maxPrice);
 
-        // Populate model with data
         model.addAttribute("categories", categoryService.getAllCategories());
         model.addAttribute("brands", brandService.getAllBrands());
+        model.addAttribute("colors", productService.getAllProductColors());
         model.addAttribute("products", page.getContent());
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalElements", page.getTotalElements());
@@ -87,11 +93,14 @@ public class ProductController {
         model.addAttribute("paramValue1", category);
         model.addAttribute("paramValue2", brand);
         model.addAttribute("paramValue3", search);
+        model.addAttribute("paramValue4", color);
         model.addAttribute("minPrice", minPrice);
         model.addAttribute("maxPrice", maxPrice);
 
         return "product";
     }
+
+
 
 
 

@@ -20,6 +20,7 @@ public interface ProductService {
     Page<Product> getAvailableProducts(int page, int size);
     List<Product> searchProduct(String ch);
     Page<Product> getAllActiveProductPagination(int pageNo, int pageSize, String category, String brand, String search);
-    Page<Product> getFilteredProducts(int pageNo, int pageSize, String category, String brand, String search, Integer minPrice, Integer maxPrice);
     void updateProductQuantity(Long id, Integer quantity);
+    List<String> getAllProductColors();
+    Page<Product> getFilteredProducts(int pageNo, int pageSize, String category, String brand, String search, String color, Integer minPrice, Integer maxPrice);
 }

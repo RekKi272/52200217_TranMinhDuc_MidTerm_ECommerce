@@ -21,7 +21,7 @@
     <!-- Start Navbar  -->
     <nav class="navbar navbar-expand-lg bg-secondary fixed-top navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#"><i class="fa-solid fa-cart-shopping"></i> Technology Store</a>
+            <a class="navbar-brand" href="/"><i class="fa-solid fa-cart-shopping"></i> Tech Gear</a>
             <button class="navbar-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggle-icon"></span>
             </button>
@@ -97,7 +97,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li th:if="${user.role == 'ROLE_USER'}">
-                                    <a class="dropdown-item" href="/user/orders">My Orders</a>
+                                    <a class="dropdown-item" href="/user/user-orders">My Orders</a>
                                 </li>
                                 <li><a class="dropdown-item" href="/logout">Logout</a></li>
                                 <li><hr class="dropdown-divider"></li>

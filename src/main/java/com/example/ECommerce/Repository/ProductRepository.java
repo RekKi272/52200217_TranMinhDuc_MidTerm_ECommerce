@@ -43,13 +43,18 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "(:category IS NULL OR :category = '' OR p.category.name = :category) AND " +
             "(:brand IS NULL OR :brand = '' OR p.brand.name = :brand) AND " +
             "(:search IS NULL OR :search = '' OR LOWER(p.name) LIKE LOWER(CONCAT('%', :search, '%'))) AND " +
+            "(:color IS NULL OR :color = '' OR LOWER(p.color) = LOWER(:color)) AND " +
             "(:minPrice IS NULL OR p.price >= :minPrice) AND " +
             "(:maxPrice IS NULL OR p.price <= :maxPrice)")
     Page<Product> findFilteredProducts(@Param("category") String category,
                                        @Param("brand") String brand,
                                        @Param("search") String search,
+                                       @Param("color") String color,
                                        @Param("minPrice") Integer minPrice,
                                        @Param("maxPrice") Integer maxPrice,
                                        Pageable pageable);
 
+
+    @Query("SELECT DISTINCT LOWER(p.color) FROM Product p WHERE p.color IS NOT NULL AND p.color <> ''")
+    List<String> findAllDistinctColors();
 }

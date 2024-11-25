@@ -31,6 +31,7 @@
         <div class="row">
             <div class="col-md-2 p-0">
                 <div class="card shadow-sm p-0 mb-5 bg-body-tertiary rounded">
+                    <p class="fs-3 text-center">Filter</p>
                     <div class="card-body">
                         <div class="list-group">
                             <!-- Category Filter -->
@@ -54,6 +55,18 @@
                                th:href="@{'/products?brand=' + ${b.name}}"
                                th:classappend="${paramValue2 == b.name} ? 'active':''"
                                class="list-group-item list-group-item-action">[[${b.name}]]</a>
+
+                            <!-- Color Filter -->
+                            <!-- Color Filter -->
+                            <p class="fs-5 mt-4">Color</p>
+                            <a href="/products"
+                               th:classappend="${paramValue4 == ''} ? 'active':''"
+                               class="list-group-item list-group-item-action"
+                               aria-current="true"> All </a>
+                            <a th:each="c : ${colors}"
+                               th:href="@{'/products?color=' + ${c}}"
+                               th:classappend="${paramValue4 == c} ? 'active':''"
+                               class="list-group-item list-group-item-action">[[${c}]]</a>
 
                             <!-- Price Range Filter -->
                             <p class="fs-5 mt-4">Price Range</p>
@@ -88,7 +101,7 @@
                                             <p class="fs-5 text-center">[[${p.name}]]</p>
                                             <div class="row text-center">
                                                 <p class="fs-6 fw-bold">
-                                                    &#8377; [[${p.price}]]
+                                                    &#36; [[${p.price}]]
                                                 </p>
                                                 <a th:href="@{'/product/' + ${p.id}}"
                                                    class="btn btn-success col-md-6 offset-md-3">View Details</a>
@@ -111,26 +124,35 @@
                         <th:block th:if="${products.size() > 0}">
                             <nav aria-label="Page navigation">
                                 <ul class="pagination">
-                                    <li class="page-item"
-                                        th:classappend="${isFirst} ? 'disabled':''">
+                                    <!-- Previous Page Link -->
+                                    <li class="page-item" th:classappend="${isFirst} ? 'disabled':''">
                                         <a class="page-link"
-                                           th:href="@{'/products?pageNo=' + ${pageNo - 1}}" aria-label="Previous">
+                                           th:href="@{'/products?pageNo=' + (${pageNo - 1}) + '&category=' + ${paramValue1} + '&brand=' + ${paramValue2} + '&ch=' + ${paramValue3} + '&minPrice=' + ${minPrice} + '&maxPrice=' + ${maxPrice}}"
+                                           aria-label="Previous">
                                             <span aria-hidden="true">&laquo;</span>
                                         </a>
                                     </li>
+
+                                    <!-- Page Numbers -->
                                     <li th:each="i : ${#numbers.sequence(1, totalPages)}" class="page-item"
                                         th:classappend="${pageNo + 1 == i} ? 'active':''">
-                                        <a class="page-link" th:href="@{'/products?pageNo=' + (${i - 1})}">[[${i}]]</a>
-                                    </li>
-                                    <li class="page-item"
-                                        th:classappend="${isLast} ? 'disabled':''">
                                         <a class="page-link"
-                                           th:href="@{'/products?pageNo=' + ${pageNo + 1}}" aria-label="Next">
+                                           th:href="@{'/products?pageNo=' + (${i - 1}) + '&category=' + ${paramValue1} + '&brand=' + ${paramValue2} + '&ch=' + ${paramValue3} + '&minPrice=' + ${minPrice} + '&maxPrice=' + ${maxPrice}}">
+                                            [[${i}]]
+                                        </a>
+                                    </li>
+
+                                    <!-- Next Page Link -->
+                                    <li class="page-item" th:classappend="${isLast} ? 'disabled':''">
+                                        <a class="page-link"
+                                           th:href="@{'/products?pageNo=' + (${pageNo + 1}) + '&category=' + ${paramValue1} + '&brand=' + ${paramValue2} + '&ch=' + ${paramValue3} + '&minPrice=' + ${minPrice} + '&maxPrice=' + ${maxPrice}}"
+                                           aria-label="Next">
                                             <span aria-hidden="true">&raquo;</span>
                                         </a>
                                     </li>
                                 </ul>
                             </nav>
+
                         </th:block>
                     </div>
                 </div>
