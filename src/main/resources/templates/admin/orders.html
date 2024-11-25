@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{base::layout(~{::section})}">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Technology Shop</title>
+</head>
+<body>
+  <section>
+    <div class="container-fluid mt-5 p-1">
+      <div class="row">
+        <p class="text-center fs-3 mt-2">User Orders</p>
+        <hr>
+        <a href="/" class="text-decoration-none"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
+
+        <!-- Success and Error Messages -->
+        <th:block th:if="${session.succMsg}">
+          <p class="text-success fw-bold text-center">[[${session.successMsg}]]</p>
+        </th:block>
+
+        <th:block th:if="${session.errorMsg}">
+          <p class="text-danger fw-bold text-center">[[${session.errorMsg}]]</p>
+        </th:block>
+
+        <!-- Orders Table -->
+        <div class="col-md-12 ps-4 pe-4">
+          <table class="table table-bordered card-sh">
+            <thead class="table-light">
+            <tr>
+              <th scope="col">Order ID</th>
+              <th scope="col">User Details</th>
+              <th scope="col">Date</th>
+              <th scope="col">Product Details</th>
+              <th scope="col">Total Amount</th>
+              <th scope="col">Status</th>
+              <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Display Orders -->
+            <tr th:each="order : ${orders}">
+              <td>[[${order.id}]]</td>
+              <td>
+                Full Name: [[${order.user.fullName}]]<br>
+                Email: [[${order.user.email}]]<br>
+                Phone: [[${order.user.phone}]]<br>
+                Address: [[${order.user.address}]]
+              </td>
+              <td th:text="${order.orderDate}"></td>
+              <td>
+                <ul>
+                  <li th:each="item : ${order.items}">
+                    Product: [[${item.product.name}]]<br>
+                    Quantity: [[${item.quantity}]], Price: [[${item.price}]]<br>
+                  </li>
+                </ul>
+              </td>
+              <td>[[${order.totalAmount}]]</td>
+              <td>[[${order.status}]]</td>
+              <td>
+                <!-- Update Status Form -->
+                <form th:action="'/admin/update-order-status?id=' +${order.id}" method="post">
+                  <div class="row">
+                    <div class="col">
+                      <select class="form-control" name="status">
+                        <option value="Pending" th:selected="${order.status == 'Pending'}">Pending</option>
+                        <option value="In Progress" th:selected="${order.status == 'In Progress'}">In Progress</option>
+                        <option value="Completed" th:selected="${order.status == 'Completed'}">Completed</option>
+                        <option value="Cancelled" th:selected="${order.status == 'Cancelled'}">Cancelled</option>
+                      </select>
+                    </div>
+                    <input type="hidden" th:value="${order.id}" name="id">
+                    <div class="col">
+                      <button class="btn btn-sm btn-primary" th:disabled="${order.status == 'Completed' || order.status == 'Cancelled'}">Update</button>
+                    </div>
+                  </div>
+                </form>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

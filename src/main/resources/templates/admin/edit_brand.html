@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{base::layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keyboard Shop</title>
+</head>
+<body>
+<section>
+    <div class="container-fluid p-5 mt-5">
+        <div class="row">
+            <div class="col-md-3 offset-md-5">
+                <div class="card card-sh">
+                    <div class="card-header text-center ">
+                        <p class="fs-4">Edit Brand</p>
+
+                        <th:block th:if="${session.successMsg}">
+                            <p class="text-success fw-bold">[[${session.successMsg}]]</p>
+                            <th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+                        </th:block >
+
+                        <th:block th:if="${session.errorMsg}">
+                            <p class="text-success fw-bold">[[${session.errorMsg}]]</p>
+                            <th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+                        </th:block >
+                    </div>
+
+                    <div class="card-body">
+                        <form action="/admin/updateBrand" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="id" th:value="${brand.id}">
+                            <div class="mb-3">
+                                <label>Enter Brand Name</label> <input type="text" name="name" th:value="${brand.name}" class="form-control">
+                            </div>
+                            <button class="btn btn-primary col-md-12 mt-2">Update</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+</body>
+</html>

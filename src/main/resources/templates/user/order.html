@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{base::layout(~{::section})}">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Keyboard Shop</title>
+</head>
+<body>
+<section>
+
+  <div class="container mt-5 p-5">
+    <form th:action="'/user/save-order?cid='+${order.id}" method="post" id="orders" novalidate>
+        <div class="col-md-6">
+          <p class="text-center fs-4">Payment Type</p>
+          <hr>
+          <div class="card">
+            <div class="card-body">
+              <table class="table table-borderless">
+                <tbody>
+                <tr>
+                    <td th:each="item : ${order.items}">
+                      <span>[[${item.product.name}]] (Quantity: [[${item.quantity}]])</span><br>
+                      <span>Price: [[${item.price}]]</span>
+                    </td>
+                </tr>
+
+                <tr>
+                  <td>Total price</td>
+                  <td>:</td>
+                  <td>&#8377; [[${totalAmount}]]</td>
+                </tr>
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card shadow p-3 mb-5 mt-2 bg-body-tertiary rounded">
+
+            <div class="card-body">
+
+              <div class="mb-3">
+                <label class="form-label">Select Payment Type</label> <select required name="paymentType" class="form-control">
+                <option value="">--select--</option>
+                <option value="COD">Cash On Delivery</option>
+              </select>
+
+              </div>
+
+              <button class="btn bg-primary text-white col-md-12">Place Order</button>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </form>
+  </div>
+
+</section>
+</body>
+</html>

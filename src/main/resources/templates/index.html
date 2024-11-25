@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+                    th:replace="~{base::layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keyboard Shop</title>
+</head>
+<body>
+    <section>
+        <!-- Start Slider -->
+        <div id="carouselExample" class="carousel slide">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="/images/welcome2.jpg" class="d-block w-100" style="width: 400px; height: 400px;" alt="Specific size image">
+                </div>
+                <div class="carousel-item active">
+                    <img src="/images/tech1.jpg" class="d-block w-100" style="width: 400px; height: 400px;" alt="Specific size image">
+                </div>
+
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+        <!-- End Slider -->
+
+        <!-- Start Category Module -->
+        <div class = "container">
+            <div class = "row">
+                <p class = "text-center fs-4">Category</p>
+                <div class = "col-md-4">
+                    <div class ="card rounded-circle shadow-sm p-3 mb-5 bg-body-tertiary rounded">
+                        <div class = "card-body text-center">
+                            <img src ="/images/category_img/laptop.jpg" width = "65%" height = "140px">
+                            <p>Laptop</p>
+                        </div>
+                    </div>
+                </div>
+                <div class = "col-md-4">
+                    <div class ="card rounded-circle shadow-sm p-3 mb-5 bg-body-tertiary rounded">
+                        <div class = "card-body text-center">
+                            <img src ="/images/category_img/keyboard.jpeg" width = "65%" height = "140px">
+                            <p>Keyboard</p>
+                        </div>
+                    </div>
+                </div>
+                <div class = "col-md-4">
+                    <div class ="card rounded-circle shadow-sm p-3 mb-5 bg-body-tertiary rounded">
+                        <div class = "card-body text-center">
+                            <img src ="/images/category_img/mouse.jfif" width = "65%" height = "140px">
+                            <p>Mouse</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Category Module -->
+    </section>
+</body>
+</html>

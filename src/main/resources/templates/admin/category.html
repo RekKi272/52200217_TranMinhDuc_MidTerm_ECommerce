@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{base::layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keyboard Shop</title>
+
+    <script type="text/javascript">
+        function confirmDelete(event) {
+            console.log('Delete clicked');
+            const confirmAction = confirm("Are you sure you want to delete this category?");
+            if (!confirmAction) {
+                event.preventDefault(); // Prevents the link from being followed
+                return false; // Explicitly return false to indicate cancellation
+            }
+            return true; // Return true to allow deletion (optional)
+        }
+    </script>
+
+</head>
+<body>
+    <section>
+        <div class="container-fluid p-5 mt-5">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card card-sh">
+                        <div class="card-header text-center ">
+                            <p class="fs-4">Add Category</p>
+                            <th:block th:if="${session.successMsg}">
+                                <p class="text-success fw-bold">[[${session.successMsg}]]</p>
+                                <th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+                            </th:block >
+
+                            <th:block th:if="${session.errorMsg}">
+                                <p class="text-success fw-bold">[[${session.errorMsg}]]</p>
+                                <th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+                            </th:block >
+                        </div>
+                        <div class="card-body">
+                            <form action="/admin/saveCategory" method="post" enctype="multipart/form-data">
+
+                                <div class="mb-3">
+                                    <label>Enter Category Name</label><input type="text" name="name" class="form-control">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label>Upload Image</label>
+                                    <input type="file" name="file" class="form-control">
+                                </div>
+                                <button class="btn btn-primary col-md-12 mt-2">Save</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-8">
+                    <div class="card card-sh">
+                        <div class="card-header text-center fs-4">Category Details</div>
+                        <div class="card-body">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Sl No</th>
+                                    <th scope="col">Category</th>
+                                    <th scope="col">Image</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="cat, c:${categories}">
+                                        <th scope="row">[[${c.count}]]</th>
+                                        <td>[[${cat.name}]]</td>
+                                        <td><img th:src="@{'/images/category_img/'+${cat.image}}" width="50px" height="50px" alt=""></td>
+                                        <td>
+                                            <a th:href="@{'/admin/loadEditCategory/'+${cat.id}}" class="btn btn-primary btn-sm">
+                                            <i class="fa-solid fa-pen-to-square  fa-1x"></i> Edit </a>
+                                            <a href="#" th:href="@{'/admin/deleteCategory/'+${cat.id}}"
+                                               class="btn btn-danger btn-sm"
+                                               onclick="return confirmDelete()">
+                                                <i class="fa-solid fa-trash fa-1x"></i>Delete
+                                            </a>
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="row">
+                                <div class="col-md-4">Total Category :
+                                    [[${totalElements}]]</div>
+                                <div class="col-md-6">
+
+                                    <nav aria-label="Page navigation example">
+                                        <ul class="pagination">
+
+                                        </ul>
+                                    </nav>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+</body>
+</html>

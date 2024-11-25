@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{base::layout(~{::section})}">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register Page</title>
+</head>
+<body>
+  <section>
+
+    <div class="container card-sh" style="margin-top: 70px; margin-bottom: 100px">
+
+      <div class="col-md-12 p-5">
+        <div class="row">
+
+          <th:block th:if="${session.successMsg}">
+            <p class="text-success alert alert-success text-center" role="alert">[[${session.successMsg}]]</p>
+            <th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+          </th:block>
+
+          <th:block th:if="${session.errorMsg}">
+            <p class="text-danger text-center  alert alert-danger">[[${session.errorMsg}]]</p>
+            <th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+          </th:block>
+
+          <div class="col-md-6 text-end">
+            <img alt="" th:src="@{'/images/product_img/'+${product.image}}" width="300px"
+                 height="250px">
+          </div>
+          <div class="col-md-6">
+
+            <p class="fs-3">[[${product.name}]]</p>
+            <p>
+              <span class="fw-bold">Description : </span><br>[[${product.description}]]
+            </p>
+            <p>
+              <span class="fw-bold"> Product Details: </span> <br> Status :
+              <th:block th:if="${product.quantity>0}">
+                <span class="badge bg-success">Available</span>
+              </th:block>
+
+              <th:block th:unless="${product.quantity>0}">
+                <span class="badge bg-warning">out of stock</span>
+              </th:block>
+            </p>
+            <p class="fs-5 fw-bold">
+              <span class="fw-bold"> Product Price: </span>
+              <span class="fs-10 text-decoration-none text-secondary">[[${product.price}]]</span>
+            </p>
+
+            <th:block th:if="${product.quantity>0}">
+              <th:block th:if="${user==null}">
+                <a href="/signin" class="btn btn-danger col-md-12">Add To Cart</a>
+              </th:block>
+
+              <th:block th:unless="${user==null}">
+                <a th:href="@{'/user/addCart?pid='+${product.id}+'&uid='+${user.id}+'&quantity=1'}" class="btn btn-danger col-md-12">Add To Cart</a>
+              </th:block>
+
+            </th:block>
+
+            <th:block th:unless="${product.quantity>0}">
+              <a href="#" class="btn text-white btn-warning col-md-12">Out
+                of Stock</a>
+            </th:block>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+</body>
+</html>

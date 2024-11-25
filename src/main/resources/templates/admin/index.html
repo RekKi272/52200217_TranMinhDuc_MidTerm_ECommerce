@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{base::layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technology Shop</title>
+</head>
+<body>
+    <section>
+        <div class="container p-5">
+            <p class="text-center fs-3 mt-4">Admin Dashboard</p>
+            <div class="row p-5">
+
+                <!-- Add Product -->
+                <div class="col-md-4 mt-4">
+                    <a href="/admin/loadAddProduct" class="text-decoration-none">
+                        <div class="card card-sh">
+                            <div class="card-body text-center text-primary">
+                                <i class="fa-solid fa-square-plus fa-3x text-primary"></i>
+                                <h4>Add Product</h4>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Add Brand  -->
+                <div class="col-md-4 mt-4">
+                    <a href="/admin/brand" class="text-decoration-none">
+                        <div class="card card-sh">
+                            <div class="card-body text-center text-warning">
+                                <i class="fa-solid fa-star fa-3x text-warning"></i>
+                                <h4>Brand</h4>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Add Category -->
+                <div class="col-md-4 mt-4">
+                    <a href="/admin/category" class="text-decoration-none">
+                        <div class="card card-sh">
+                            <div class="card-body text-center text-success">
+                                <i class="fa-solid fa-list fa-3x text-success"></i>
+                                <h4>Category</h4>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- View Product -->
+                <div class="col-md-4 mt-4">
+                    <a href="/admin/view_product" class="text-decoration-none">
+                        <div class="card card-sh">
+                            <div class="card-body text-center text-info">
+                                <i class="fa-brands fa-product-hunt fa-3x text-info"></i>
+                                <h4>View Product</h4>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- View Order -->
+                <div class="col-md-4 mt-4">
+                    <a href="/admin/loadOrders" class="text-decoration-none">
+                        <div class="card card-sh">
+                            <div class="card-body text-center text-warning">
+                                <i class="fa-solid fa-truck-ramp-box fa-3x text-warning"></i>
+                                <h4>Orders</h4>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- View User -->
+                <div class="col-md-4 mt-4">
+                    <a href="/admin/users?type=1" class="text-decoration-none">
+                        <div class="card card-sh">
+                            <div class="card-body text-center text-danger">
+                                <i class="fa-solid fa-user-gear fa-3x text-danger"></i>
+                                <h4>Users</h4>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Admin -->
+                <div class="d-flex justify-content-center vh-100">
+                    <div class="col-md-4 mt-4">
+                        <a href="/admin/users?type=2"  class="text-decoration-none">
+                            <div class="card card-sh">
+                                <div class="card-body text-center text-secondary">
+                                    <i class="fa-solid fa-user-secret fa-3x text-secondary"></i>
+                                    <h4>Admin</h4>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </section>
+</body>
+</html>
