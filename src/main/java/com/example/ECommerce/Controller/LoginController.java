@@ -30,6 +30,13 @@ public class LoginController {
     @Autowired
     private OrderService orderService;
 
+    @GetMapping("/")
+    public String index(Model model) {
+        model.addAttribute("categories", categoryService.getAllCategories());
+        model.addAttribute("brands", brandService.getAllBrands());
+        return "index";
+    }
+
     @ModelAttribute
     public void getUserInformation(Principal p, Model model) {
         if (p != null) {
@@ -43,17 +50,10 @@ public class LoginController {
                 model.addAttribute("user", null);
             }
         } else {
-            model.addAttribute("user", null);
+            model.addAttribute("user", new User());
         }
         model.addAttribute("categories", categoryService.getAllCategories());
         model.addAttribute("brands", brandService.getAllBrands());
-    }
-
-    @GetMapping("/")
-    public String index(Model model) {
-        model.addAttribute("categories", categoryService.getAllCategories());
-        model.addAttribute("brands", brandService.getAllBrands());
-        return "index";
     }
 
     @GetMapping(value = "/signin")
@@ -72,26 +72,31 @@ public class LoginController {
     public String registerPost(@ModelAttribute User user,
                                @RequestParam("confirmPassword") String confirmPassword,
                                Model model) {
+
+        if (user == null) {
+            model.addAttribute("errorMsg", "Invalid user data. Please fill out the form correctly.");
+            return "redirect:/register";
+        }
         // Check if the passwords match
         if (!user.getPassword().equals(confirmPassword)) {
             model.addAttribute("errorMsg", "Passwords do not match. Please try again.");
-            return "register";
+            return "redirect:/register";
         }
 
         // Check if the username or email is already taken
         if (userService.isUsernameTaken(user.getUsername())) {
             model.addAttribute("errorMsg", "Username is already taken.");
-            return "register";
+            return "redirect:/register";
         }
 
         if (userService.isEmailTaken(user.getEmail())) {
             model.addAttribute("errorMsg", "Email is already taken.");
-            return "register";
+            return "redirect:/register";
         }
 
         userService.saveUser(user);
         model.addAttribute("successMsg", "User successfully registered.");
 
-        return "login";
+        return "redirect:/signin";
     }
 }
