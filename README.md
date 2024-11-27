@@ -2,10 +2,10 @@
 ## Tech Gear Store
 This E-commerce project built on Spring Boot
 
-User account:
+### User account:
 username: user1
 password: 123456
-admin account:
+### admin account:
 username: admin
 password: admin
 
