@@ -249,17 +249,22 @@ public class AdminController {
 
     @PostMapping(value = "/updateProduct")
     public String updateProduct(@ModelAttribute Product product, @RequestParam("file") MultipartFile file, HttpSession session) throws IOException {
-        String ProductImageName = file != null ? file.getOriginalFilename() : "default.jpg";
+        Product oldProduct = productService.getProductById(product.getId());
+        String ProductImageName = file != null && !file.isEmpty() ? file.getOriginalFilename() : oldProduct.getImage();
         product.setImage(ProductImageName);
-        if(productService.existsProductByName(product.getName())){
-            session.setAttribute("errorMsg", "Product name already exists");
+
+        if (product.getAvailable() == null) {
+            product.setAvailable(false);
         }
-        else {
-            productService.saveProduct(product);
-            String path = "src/main/resources/static/images/product_img";
-            commonService.saveImage(path, file);
-            session.setAttribute("successMsg", "Product added successfully");
+
+        productService.updateProduct(product);
+        String path = "src/main/resources/static/images/product_img";
+        // Save the image using the common service
+        if (file != null && !file.isEmpty()) {
+            commonService.saveImage(path, file); // Save the file to the specified path
         }
+        session.setAttribute("successMsg", "Product updated successfully");
+
         return "redirect:/admin/view_product";
     }
 

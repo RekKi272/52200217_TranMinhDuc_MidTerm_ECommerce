@@ -67,11 +67,13 @@
               <div class="mb-3">
                 <label>Status</label>
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" th:checked="${product.available}"
-                         value="true" name="available" id="flexRadioDefault1">
-                  <label class="form-check-label" for="flexRadioDefault1"> Active </label>
+                  <!-- Checkbox input để gửi 'true' nếu checked và không gửi nếu unchecked -->
+                  <input class="form-check-input" type="checkbox" th:checked="${product.available}" name="available" value="true" id="available">
+                  <label class="form-check-label" for="available">Active</label>
                 </div>
               </div>
+
+
 
               <div class="row">
                 <div class="mb-3 col">

@@ -13,6 +13,7 @@ public interface ProductService {
     void deleteProductById(Long id);
     boolean existsProductByName(String productName);
     Product updateProductById(Long id,Product product);
+    Product updateProduct(Product product);
     Product saveProduct(Product product);
     Iterable<Product> getProductsByCategory(String category);
     Iterable<Product> getAvailableProducts(boolean available);
