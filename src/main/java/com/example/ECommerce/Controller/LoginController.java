@@ -71,31 +71,31 @@ public class LoginController {
     @PostMapping("/saveUser")
     public String registerPost(@ModelAttribute User user,
                                @RequestParam("confirmPassword") String confirmPassword,
-                               Model model) {
+                               Model model, HttpSession session) {
 
         if (user == null) {
-            model.addAttribute("errorMsg", "Invalid user data. Please fill out the form correctly.");
+            session.setAttribute("errorMsg", "Invalid user data. Please fill out the form correctly.");
             return "redirect:/register";
         }
         // Check if the passwords match
         if (!user.getPassword().equals(confirmPassword)) {
-            model.addAttribute("errorMsg", "Passwords do not match. Please try again.");
+            session.setAttribute("errorMsg", "Passwords do not match. Please try again.");
             return "redirect:/register";
         }
 
         // Check if the username or email is already taken
         if (userService.isUsernameTaken(user.getUsername())) {
-            model.addAttribute("errorMsg", "Username is already taken.");
+            session.setAttribute("errorMsg", "Username is already taken.");
             return "redirect:/register";
         }
 
         if (userService.isEmailTaken(user.getEmail())) {
-            model.addAttribute("errorMsg", "Email is already taken.");
+            session.setAttribute("errorMsg", "Email is already taken.");
             return "redirect:/register";
         }
 
         userService.saveUser(user);
-        model.addAttribute("successMsg", "User successfully registered.");
+        session.setAttribute("successMsg", "User successfully registered.");
 
         return "redirect:/signin";
     }

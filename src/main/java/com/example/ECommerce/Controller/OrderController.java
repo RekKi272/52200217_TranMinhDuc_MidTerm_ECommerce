@@ -4,6 +4,7 @@ import com.example.ECommerce.Model.Order;
 import com.example.ECommerce.Model.OrderItem;
 import com.example.ECommerce.Model.User;
 import com.example.ECommerce.Service.*;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -145,7 +146,7 @@ public class OrderController {
 
 
     @PostMapping(value = "/save-order")
-    public String saveOrder(@RequestParam Long cid, @RequestParam String paymentType, Principal principal, Model model) {
+    public String saveOrder(@RequestParam Long cid, @RequestParam String paymentType, Principal principal, Model model, HttpSession session) {
         if (principal != null) {
             String username = principal.getName();
             User currentUser = userService.getUserByUsername(username);
@@ -170,7 +171,7 @@ public class OrderController {
             orderService.checkoutCart(currentUser.getId());
 
             model.addAttribute("order", order);
-            model.addAttribute("successMsg", "Order Successfully");
+            session.setAttribute("successMsg", "Order Successfully");
             return "user/success";
         } else {
             return "redirect:/signin";
